@@ -46,6 +46,6 @@ should give back a random permutation of the array (e.g., `2,3,6,7,1,3,5`)
 * Do all 3 parts, and use git tags to mark the commit fulfilling part 1 and part 2.
 
 ## Deliverables
-* Send us a link to a repository fulfilling the requirements with the three tags to check part 1 and 2.
+* Send us a link to a repository fulfilling the requirements with two tags to check part 1 and 2.
 * Your code will be tested using different tests.
 * Successful implementation will move to interview.

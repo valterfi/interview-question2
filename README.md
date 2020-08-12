@@ -5,8 +5,6 @@ Interview question
 This is a very basic spring-boot app. Run it (using `mvn spring-boot:run`) or your favorite IDE.
 Try the url `http://localhost:5000/greeting?name=David`, it should return the string: "Hello David".
 
-There is also a package persistence which contains a basic CRUD example with persistence - this will be addressed in part 3.
-
 # Requirements
 ### Part one - Basic local service
 We would like to create 2 APIs, 

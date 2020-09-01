@@ -25,6 +25,12 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import com.backbase.numbers.model.NumberContainer;
 import com.backbase.numbers.service.NumbersService;
 
+/**
+ * Unit Test for NumbersController
+ * 
+ * @author valterfi
+ *
+ */
 @SpringBootTest
 @RunWith(SpringRunner.class)
 @AutoConfigureMockMvc
@@ -36,6 +42,12 @@ public class NumbersControllerTest {
 	@MockBean
 	private NumbersService numbersService;
 	
+	/**
+	 * Given a POST "/store" request without RequestParams
+	 * Then a bad request response will return
+	 * 
+	 * @throws Exception
+	 */
 	@Test
 	public void shouldBadRequestStore() throws Exception {
 		mockMvc.perform(MockMvcRequestBuilders
@@ -44,6 +56,12 @@ public class NumbersControllerTest {
 				  .andExpect(status().isBadRequest());
 	}
 	
+	/**
+	 * Given a POST "/store" request with RequestParams
+	 * Then the new id will return
+	 * 
+	 * @throws Exception
+	 */
 	@Test
 	public void shouldStoreNumbersOk() throws Exception {
 		List<Integer> numbers = Arrays.asList(2, 1, 3, 4, 6, 5, 7);
@@ -63,6 +81,12 @@ public class NumbersControllerTest {
 				  .andExpect(jsonPath("$").value("1"));
 	}
 	
+	/**
+	 * Given a POST "/store" request with empty RequestParams
+	 * Then the new id will return
+	 * 
+	 * @throws Exception
+	 */
 	@Test
 	public void shouldStoreEmptyNumbersOk() throws Exception {
 		List<Integer> numbers = new ArrayList<Integer>();
@@ -82,6 +106,12 @@ public class NumbersControllerTest {
 				  .andExpect(jsonPath("$").value("2"));
 	}
 	
+	/**
+	 * Given a POST "/store" request that throws an exception
+	 * Then an Internal Server Error response with exception information will return
+	 * 
+	 * @throws Exception
+	 */
 	@Test
 	public void shouldStoreThrowException() throws Exception {
 		List<Integer> numbers = Arrays.asList(2, 1, 3, 4, 6, 5, 7);
@@ -97,6 +127,12 @@ public class NumbersControllerTest {
 			      .andExpect(result -> assertTrue(result.getResolvedException().getMessage().contains(errorMessage)));
 	}
 	
+	/**
+	 * Given a GET "/permutation" request without RequestParams
+	 * Then a bad request response will return
+	 * 
+	 * @throws Exception
+	 */
 	@Test
 	public void shouldBadRequestPermutation() throws Exception {
 		mockMvc.perform(MockMvcRequestBuilders
@@ -105,6 +141,12 @@ public class NumbersControllerTest {
 				  .andExpect(status().isBadRequest());
 	}
 	
+	/**
+	 * Given a GET "/permutation" request with RequestParams
+	 * Then it will return the new list with the exchanged positions
+	 * 
+	 * @throws Exception
+	 */
 	@Test
 	public void shouldPermutationOk() throws Exception {
 		List<Integer> numbers = Arrays.asList(2, 1, 3, 4, 6, 5, 7);
@@ -132,6 +174,12 @@ public class NumbersControllerTest {
 			      .andExpect(jsonPath("$[6]").value(5));
 	}
 	
+	/**
+	 * Given a GET "/permutation" request with RequestParams that returns null
+	 * Then a Not Found response will be returned
+	 * 
+	 * @throws Exception
+	 */
 	@Test
 	public void shouldNotFoundPermutation() throws Exception {
 		given(numbersService.findById(1L)).willReturn(null);
@@ -142,6 +190,12 @@ public class NumbersControllerTest {
 				  .andExpect(status().isNotFound());
 	}
 	
+	/**
+	 * Given a GET "/permutation" request with empty RequestParams
+	 * Then a Not Found response will be returned
+	 * 
+	 * @throws Exception
+	 */
 	@Test
 	public void shouldNotFoundWithIdNullPermutation() throws Exception {
 		mockMvc.perform(MockMvcRequestBuilders
@@ -150,6 +204,12 @@ public class NumbersControllerTest {
 				  .andExpect(status().isNotFound());
 	}
 	
+	/**
+	 * Given a GET "/permutation" request with RequestParams that throws an exception
+	 * Then an Internal Server Error response with exception information will return
+	 * 
+	 * @throws Exception
+	 */
 	@Test
 	public void shouldPermutationThrowException() throws Exception {
 		List<Integer> numbers = Arrays.asList(2, 1, 3, 4, 6, 5, 7);

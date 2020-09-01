@@ -14,12 +14,21 @@ import org.springframework.web.server.ResponseStatusException;
 import com.backbase.numbers.model.NumberContainer;
 import com.backbase.numbers.service.NumbersService;
 
+/**
+ * @author valterfi
+ *
+ */
 @RestController
 public class NumbersController {
 	
 	@Autowired
 	private NumbersService numbersService;
 	
+	/**
+	 * Implements the request to store an integer list
+	 * @param numbers
+	 * @return Response with the new record id
+	 */
 	@PostMapping("/store")
 	public ResponseEntity<Long> store(@RequestParam List<Integer> numbers) {
 		try {
@@ -30,6 +39,12 @@ public class NumbersController {
 		}
 	}
 	
+	/**
+	 * Implements the exchange of the list with such an id. 
+	 * For each request a random list is returned
+	 * @param id
+	 * @return Response with the list using exchanged positions
+	 */
 	@GetMapping("/permutation")
 	public ResponseEntity<List<Integer>> permute(@RequestParam Long id) {
 		NumberContainer numberContainer = numbersService.findById(id);
@@ -43,7 +58,6 @@ public class NumbersController {
 		} else {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "ID Not Found");
 		}
-		
 	}
 
 }

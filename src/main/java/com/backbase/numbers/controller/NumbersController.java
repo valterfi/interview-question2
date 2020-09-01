@@ -22,19 +22,28 @@ public class NumbersController {
 	
 	@PostMapping("/store")
 	public ResponseEntity<Long> store(@RequestParam List<Integer> numbers) {
-		NumberContainer numberContainer = numbersService.store(numbers);
-		return new ResponseEntity<Long>(numberContainer.getId(), HttpStatus.OK);
+		try {
+			NumberContainer numberContainer = numbersService.store(numbers);
+			return new ResponseEntity<Long>(numberContainer.getId(), HttpStatus.OK);
+		} catch (Exception e) {
+			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage(), e);
+		}
 	}
 	
 	@GetMapping("/permutation")
 	public ResponseEntity<List<Integer>> permute(@RequestParam Long id) {
 		NumberContainer numberContainer = numbersService.findById(id);
 		if (numberContainer != null) {
-			List<Integer> permutation = numbersService.permute(numberContainer.getNumbers());
-			return new ResponseEntity<List<Integer>>(permutation, HttpStatus.OK);
+			try {
+				List<Integer> permutation = numbersService.permute(numberContainer.getNumbers());
+				return new ResponseEntity<List<Integer>>(permutation, HttpStatus.OK);
+			} catch (Exception e) {
+				throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage(), e);
+			}
 		} else {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "ID Not Found");
 		}
+		
 	}
 
 }

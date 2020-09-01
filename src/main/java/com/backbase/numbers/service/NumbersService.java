@@ -15,12 +15,12 @@ public class NumbersService {
 	@Autowired
 	private NumbersMemoryRepository numbersRepository;
 	
-	public NumberContainer store(List<Integer> numbers) {
+	public NumberContainer store(List<Integer> numbers) throws Exception {
 		NumberContainer numberContainer = NumberContainer.builder().numbers(numbers).build();
 		return numbersRepository.save(numberContainer);
 	}
 	
-	public List<Integer> permute(List<Integer> numbers) {
+	public List<Integer> permute(List<Integer> numbers) throws Exception {
 		Collections.shuffle(numbers);
 		return numbers;
 	}

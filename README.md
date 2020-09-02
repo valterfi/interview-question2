@@ -56,6 +56,7 @@ a random permutation of the array (e.g., `2,3,6,7,1,3,5`)
 - In this version, storage was developed in memory without using any database
 - I assumed that it is possible to store empty lists
 - The NumberContainer class is the representation for storing lists of numbers
+- By default the application will run on port 5000
 - Automated tests can be run at different phases of the maven
   - Running unit tests:
   ```sh
@@ -81,6 +82,13 @@ a random permutation of the array (e.g., `2,3,6,7,1,3,5`)
     ```sh
     $ mvn spring-boot:run
     ```
+
+  - Or Providing a docker image and deploying anywhere
+    ```sh
+    $ mvn clean package
+    $ docker build -f Dockerfile -t numbers .
+    $ docker run -p 5000:5000 numbers
+    ``` 
 
 
 <!-- This is a very basic spring-boot app. Run it (using `mvn spring-boot:run`) or your favorite IDE.

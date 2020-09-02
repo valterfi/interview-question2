@@ -1,10 +1,7 @@
-server:
-  port: 5000
-
 spring:
   datasource:
-#    url: jdbc:h2:mem:numbersdb;DB_CLOSE_DELAY=-1
-    url: jdbc:h2:file:./numbersdb;DB_CLOSE_DELAY=-1
+    url: jdbc:h2:mem:numbersdb;DB_CLOSE_DELAY=-1
+#    url: jdbc:h2:file:./numbersdb;DB_CLOSE_DELAY=-1
     driverClassName: org.h2.Driver
     username: sa
     password: password
@@ -13,9 +10,10 @@ spring:
     show-sql: true
     generate-ddl: true
     hibernate:
-       #ddl-auto: create
-       ddl-auto: update
+       ddl-auto: create
+       #ddl-auto: update
     open-in-view: false
   h2:
     console:
-      enabled: true
+      enabled: false
+

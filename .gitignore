@@ -34,3 +34,6 @@ build/
 
 ### nohup ###
 nohup.out
+
+### h2 ###
+numbersdb*.db

@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.backbase.numbers.model.NumberContainer;
-import com.backbase.numbers.repository.NumbersMemoryRepository;
+import com.backbase.numbers.repository.NumbersJpaRepository;
 
 /**
  * @author valterfi
@@ -17,7 +17,7 @@ import com.backbase.numbers.repository.NumbersMemoryRepository;
 public class NumbersService {
 
 	@Autowired
-	private NumbersMemoryRepository numbersRepository;
+	private NumbersJpaRepository numbersRepository;
 
 	/**
 	 * Create a new instance of NumberContainer with the list passed by parameter and saved in the database
@@ -50,7 +50,11 @@ public class NumbersService {
 	 * @return NumberContainer
 	 */
 	public NumberContainer findById(Long id) {
-		return numbersRepository.findById(id).orElse(null);
+		NumberContainer numberContainer = null;
+		if (id != null) {
+			numberContainer = numbersRepository.findById(id).orElse(null);
+		}
+		return numberContainer;
 	}
 
 }

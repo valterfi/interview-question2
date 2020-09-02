@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.DirtiesContext.ClassMode;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.backbase.numbers.model.NumberContainer;
@@ -27,11 +28,12 @@ import com.backbase.numbers.model.NumberContainer;
  */
 @SpringBootTest
 @RunWith(SpringRunner.class)
+@ActiveProfiles("test")
 @DirtiesContext(classMode = ClassMode.BEFORE_EACH_TEST_METHOD)
 public class NumbersMemoryRepositoryIT {
 
 	@Autowired
-	private NumbersMemoryRepository numbersMemoryRepository;
+	private NumbersJpaRepository numbersJpaRepository;
 
 	/**
 	 * Given an instance of NumberContainer without id
@@ -44,7 +46,7 @@ public class NumbersMemoryRepositoryIT {
 
 		NumberContainer expectedNumberContainer = NumberContainer.builder().id(1L).numbers(numbers).build();
 
-		NumberContainer newNumberContainer = numbersMemoryRepository.save(numberContainer);
+		NumberContainer newNumberContainer = numbersJpaRepository.save(numberContainer);
 
 		assertThat(expectedNumberContainer, is(newNumberContainer));
 		assertThat(1L, is(newNumberContainer.getId()));
@@ -57,11 +59,11 @@ public class NumbersMemoryRepositoryIT {
 	@Test
 	public void shouldUpdateNumberContainer() {
 		List<Integer> numbers = Arrays.asList(2, 1, 3, 4, 6, 5, 7);
-		NumberContainer numberContainer = NumberContainer.builder().id(2L).numbers(numbers).build();
+		NumberContainer numberContainer = NumberContainer.builder().id(1L).numbers(numbers).build();
 
-		NumberContainer expectedNumberContainer = NumberContainer.builder().id(2L).numbers(numbers).build();
+		NumberContainer expectedNumberContainer = NumberContainer.builder().id(1L).numbers(numbers).build();
 
-		NumberContainer updatedNumberContainer = numbersMemoryRepository.save(numberContainer);
+		NumberContainer updatedNumberContainer = numbersJpaRepository.save(numberContainer);
 
 		assertThat(expectedNumberContainer, is(updatedNumberContainer));
 	}
@@ -75,10 +77,10 @@ public class NumbersMemoryRepositoryIT {
 		List<Integer> numbers = Arrays.asList(2, 1, 3, 4, 6, 5, 7);
 		NumberContainer numberContainer = NumberContainer.builder().numbers(numbers).build();
 
-		NumberContainer newNumberContainer = numbersMemoryRepository.save(numberContainer);
+		NumberContainer newNumberContainer = numbersJpaRepository.save(numberContainer);
 		assertThat(1L, is(newNumberContainer.getId()));
 
-		Optional<NumberContainer> optional = numbersMemoryRepository.findById(1L);
+		Optional<NumberContainer> optional = numbersJpaRepository.findById(1L);
 		assertTrue(optional.isPresent());
 
 		NumberContainer foundNumberContainer = optional.get();
@@ -94,7 +96,7 @@ public class NumbersMemoryRepositoryIT {
 	 */
 	@Test
 	public void shouldNotFindNumberContainerById() {
-		Optional<NumberContainer> optional = numbersMemoryRepository.findById(4L);
+		Optional<NumberContainer> optional = numbersJpaRepository.findById(4L);
 		assertFalse(optional.isPresent());
 	}
 

@@ -7,41 +7,33 @@ import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.Assert.assertThat;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.backbase.numbers.model.NumberContainer;
-import com.backbase.numbers.repository.NumbersMemoryRepository;
 
 /**
- * Unit Test for NumbersService
+ * Integration Test for NumbersService
  *
  * @author valterfi
  *
  */
 @SpringBootTest
 @RunWith(SpringRunner.class)
-public class NumbersServiceTest {
+@DirtiesContext(classMode = ClassMode.BEFORE_EACH_TEST_METHOD)
+public class NumbersServiceIT {
 
 	@Autowired
 	private NumbersService numbersService;
-
-	@MockBean
-	private NumbersMemoryRepository numbersRepository;
 
 	/**
 	 * Given a list of numbers
@@ -53,33 +45,9 @@ public class NumbersServiceTest {
 	public void shouldStoreNumberContainer() throws Exception {
 		List<Integer> numbers = Arrays.asList(2, 1, 3, 4, 6, 5, 7);
 
-		NumberContainer numberContainer = NumberContainer.builder().numbers(numbers).build();
-		NumberContainer storedNumberContainer = NumberContainer.builder().id(1L).numbers(numbers).build();
-
-		given(numbersRepository.save(numberContainer)).willReturn(storedNumberContainer);
-
 		NumberContainer expectedNumberContainer = NumberContainer.builder().id(1L).numbers(numbers).build();
 
 		assertThat(expectedNumberContainer, is(numbersService.store(numbers)));
-
-		verify(numbersRepository, times(1)).save(numberContainer);
-		verifyNoMoreInteractions(numbersRepository);
-	}
-
-	/**
-	 * Given a list of numbers that throws an error when being saved to the database
-	 * Then it will throw an Exception
-	 *
-	 * @throws Exception
-	 */
-	@Test(expected = Exception.class)
-	public void shouldStoreThrowExceptionNumberContainer() throws Exception {
-		List<Integer> numbers = Arrays.asList(2, 1, 3, 4, 6, 5, 7);
-		NumberContainer numberContainer = NumberContainer.builder().numbers(numbers).build();
-
-		when(numbersRepository.save(numberContainer)).thenThrow(Exception.class);
-
-		numbersService.store(numbers);
 	}
 
 	/**
@@ -102,22 +70,18 @@ public class NumbersServiceTest {
 	/**
 	 * Given an id that exists in the database
 	 * Then it should return the NumberContainer instance with that id
+	 * @throws Exception
 	 */
 	@Test
-	public void shouldFindNumberContainerById() {
+	public void shouldFindNumberContainerById() throws Exception {
 		Long id = 1L;
 		List<Integer> numbers = Arrays.asList(2, 1, 3, 4, 6, 5, 7);
+
+		numbersService.store(numbers);
+
 		NumberContainer expectedNumberContainer = NumberContainer.builder().id(1L).numbers(numbers).build();
-
-		Optional<NumberContainer> optional = Optional.ofNullable(expectedNumberContainer);
-		given(numbersRepository.findById(id)).willReturn(optional);
-
 		NumberContainer foundNumberContainer = numbersService.findById(id);
-
 		assertThat(expectedNumberContainer, is(foundNumberContainer));
-
-		verify(numbersRepository, times(1)).findById(id);
-		verifyNoMoreInteractions(numbersRepository);
 	}
 
 	/**
@@ -128,14 +92,8 @@ public class NumbersServiceTest {
 	public void shouldNotFindNumberContainerById() {
 		Long id = 1L;
 
-		given(numbersRepository.findById(id)).willReturn(Optional.empty());
-
 		NumberContainer foundNumberContainer = numbersService.findById(id);
-
 		assertThat(foundNumberContainer, nullValue());
-
-		verify(numbersRepository, times(1)).findById(id);
-		verifyNoMoreInteractions(numbersRepository);
 	}
 
 }

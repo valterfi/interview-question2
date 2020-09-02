@@ -53,7 +53,9 @@ a random permutation of the array (e.g., `2,3,6,7,1,3,5`)
 
 ### Some considerations
 
-- In this version, storage was developed in memory without using any database
+- In this version, the storage was developed using the H2 database
+- H2 database data is persisted in a file called numbersdb
+- Integration tests run using H2 database in memory
 - I assumed that it is possible to store empty lists
 - The NumberContainer class is the representation for storing lists of numbers
 - By default the application will run on port 5000

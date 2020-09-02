@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.backbase</groupId>
     <artifactId>numbers</artifactId>
-    <version>1.0.0-PART1</version>
+    <version>1.0.0-PART2</version>
     <name>numbers</name>
     <description>Interview Question</description>
 

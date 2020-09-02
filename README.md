@@ -76,7 +76,7 @@ a random permutation of the array (e.g., `2,3,6,7,1,3,5`)
   - Running the jar packed by maven;
     ```sh
     $ mvn clean package
-    $ java -jar target/numbers-1.0.0-PART1.jar
+    $ java -jar target/numbers-1.0.0-PART2.jar
     ``` 
 
   - Using the maven spring boot plugin;

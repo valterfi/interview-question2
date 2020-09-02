@@ -32,7 +32,7 @@ public class NumbersController {
 	 * @return Response with the new record id
 	 */
 	@PostMapping("/store")
-	@ApiOperation(value = "Sending a array of numbers should store and return an ID of the array", response = Long.class)
+	@ApiOperation(value = "Send an array of numbers to be stored and return an ID", response = Long.class)
 	public ResponseEntity<Long> store(@RequestParam List<Integer> numbers) {
 		try {
 			NumberContainer numberContainer = numbersService.store(numbers);
@@ -49,7 +49,7 @@ public class NumbersController {
 	 * @return Response with the list using exchanged positions
 	 */
 	@GetMapping("/permutation")
-	@ApiOperation(value = "Sending an ID should return a random permutation of the array", response = Long.class)
+	@ApiOperation(value = "Send an ID to return a random permutation of the array", response = Long.class)
 	public ResponseEntity<List<Integer>> permute(@RequestParam Long id) {
 		NumberContainer numberContainer = numbersService.findById(id);
 		if (numberContainer != null) {

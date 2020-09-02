@@ -24,7 +24,7 @@ Send an array of numbers to be stored and return an ID
 
 **URL** : `/store`
 
-**Method** : `GET`
+**Method** : `POST`
 
 **Query Parameter** : `numbers`
 
@@ -40,7 +40,7 @@ Send an array of numbers to be stored and return an ID
 
 **URL** : `/permutation`
 
-**Method** : `POST`
+**Method** : `GET`
 
 **Query Parameter** : `id`
 

@@ -62,10 +62,11 @@ a random permutation of the array (e.g., `2,3,6,7,1,3,5`)
   ```sh
     $ mvn clean test
   ```
-  - Runinng integration tests:
+  - Runinng unit tests and integration tests:
   ```sh
     $ mvn clean verify
   ```
+- Unit and integration test scenarios are the same
 - I configured a Documentation API using swagger. It is available in the /swagger-ui.html path.
 
 ### How to run
